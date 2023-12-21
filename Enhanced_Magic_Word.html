@@ -1,0 +1,182 @@
+<html>
+    <head>
+        <title>Enhanced Magic Word</title>
+        </title>
+        <style>
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                display: flex;
+                background-color: blue;
+                align-items: center;
+                justify-content: center;
+            }
+            .container{
+                display: grid;
+                grid-template-columns: repeat(1,1fr);
+                align-items: center;
+                gap: 10px;
+                
+            }
+            h1 {
+                text-align: center;
+                margin: 0;
+            }
+            .btn-container {
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+            }
+            button {
+                padding: 10px 20px;
+                border: solid;
+                border-radius: 4px;
+                color: black;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                margin: 4px 2px;
+                background-color: rgb(142, 140, 173);
+            }
+            
+            input:focus {
+                background-color: rgb(202, 193, 193);
+            }
+        </style>
+         <script>
+            //variable declaration
+            var theMagicWord = "";
+            var userInput = "";
+            var wordLength = 0;
+
+            //functions
+            function setVariable()  {
+                wordLength = theMagicWord.length;
+                userInput = document.getElementById("input1").value;
+            }
+            function clearinput()   {
+                document.getElementById("input1").value = ""
+            }
+            function enableBttn()   {
+                //document.getElementById("wordDisplay").innerHTML ="The Magic Word is " + theMagicWord
+                if (userInput.length>0) {
+                    document.getElementById("AddBeginBttn").disabled=false;
+                    document.getElementById("AddEndBttn").disabled=false;
+                }
+                else {
+                    
+                    document.getElementById("AddBeginBttn").disabled=true;                   
+                    document.getElementById("AddEndBttn").disabled=true;
+
+                }
+                if (wordLength>=500) {
+                    document.getElementById("AddBeginBttn").disabled=true;
+                    document.getElementById("AddEndBttn").disabled=true;
+                }
+                if (wordLength>0)    {
+                    
+                    document.getElementById("delBeginBttn").disabled=false;
+                    document.getElementById("delEndBttn").disabled=false;
+                }
+                else  {
+                    
+                    document.getElementById("delBeginBttn").disabled=true;
+                    document.getElementById("delEndBttn").disabled=true;
+                }
+                document.getElementById("input1").focus();
+                }
+                function addToBeginning() {
+                    setVariable();
+                    theMagicWord = userInput + theMagicWord;
+                    document.getElementById("input1").value =  ""
+                    setVariable();
+                    enableBttn();
+                }
+                function addToEnd() {
+                    setVariable();
+                    theMagicWord = theMagicWord + userInput;
+                    document.getElementById("input1").value =  ""
+                    setVariable();
+                    enableBttn();
+                }
+                function deleteFromBeginning()  {
+                    setVariable();
+                    theMagicWord = theMagicWord.substring(1);
+                    document.getElementById("input1").value =  "";
+                    setVariable();
+                    enableBttn();                
+                }
+                function deleteFromEnd()  {
+                    setVariable();
+                    theMagicWord = theMagicWord.substring(0,wordLength - 1);
+                    document.getElementById("input1").value =  "";
+                    setVariable();                    
+                    enableBttn();
+                } 
+                function wordTripler()  {
+                    var myNewWord = "";
+                    for (let i=0; i<theMagicWord.length; i++) {
+                        myNewWord = myNewWord + theMagicWord.substring(i,i+1);
+                        myNewWord = myNewWord + theMagicWord.substring(i,i+1);
+                        myNewWord = myNewWord + theMagicWord.substring(i,i+1); 
+                    }
+                    theMagicWord=myNewWord;
+                    enableBttn();
+                }
+                function letterCount()  {
+                    var myNewWord = "";
+                    var letterAppearances = 0; 
+                    var letterBeingCounted = document.getElementById("input1").value;
+                    for(let i=0; i<theMagicWord.length; i++)
+                    if(theMagicWord.substring(i,i+1)==letterBeingCounted){
+                        letterAppearances++
+                    }
+                    
+                    document.getElementById("miniWordDisplay").innerHTML = "The letter  " + letterBeingCounted + "  appears" + letterAppearances + "times"
+
+                    theMagicWord=myNewWord;
+                    enableBttn();
+                }
+                function stringSearch()  {
+                    var myNewWord = "";
+                    var stringAppearances = 0; 
+                    var stringBeingSearched = document.getElementById("stringSearchInput").value;
+                    var earlyPart = "";
+                    var latePart = "";
+                    var earlyMessage = "";
+                    var lateMessage = "";
+                    for(let i=0; i<theMagicWord.length; i++)
+
+                        if(theMagicWord.substring(i,i+stringBeingSearched)==letterBeingCounted){
+                        stringAppearances++
+                        if(stringAppearances==1)    {
+                            earlyPart = theMagicWord
+                        }
+                    }
+                    
+                    document.getElementById("miniWordDisplay").innerHTML = "The letter  " + letterBeingCounted + "  appears" + letterAppearances + "times"
+
+                    theMagicWord=myNewWord;
+                    enableBttn();
+                }
+             
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <h1 id="wordDisplay"> Welcome to the Testing Web</h1>
+            <center><h2 id="miniWordDisplay"> Type Your Word Below!</h2></center>
+            <div class="tin">
+                <center><input id="input1"onkeyup="setVariable(); enableBttn();GetLength()" onchange="setVariable(); enableBttn()" maxlength="20" style="background-color: rgb(255, 252, 252);">            
+                <button onclick="letterCount();"> Cound Display</button>
+                </div>
+            <div class="btn-container">
+                <button id="AddBeginBttn" disabled="true" onclick="addToBeginning();">Add to the Beginning</button>
+                <button id="AddEndBttn" disabled="true" onclick="addToEnd();">Add to End</button><br>
+                <button id="delBeginBttn" disabled="true" onclick="deleteFromBeginning();">Delete to Beginning</button>
+                <button id="delEndBttn" disabled="true" onclick="deleteFromEnd();">Delete to End</button>
+                <button id="triplebttn" disabled="true" onclick="wordTripler()">Word Tripler!!!</button>
+                <input id="stringSearchInput">
+            </div>
+        </div>
+    </body>
+</html>
